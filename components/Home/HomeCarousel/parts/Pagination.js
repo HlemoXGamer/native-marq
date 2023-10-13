@@ -1,4 +1,5 @@
 import { StyleSheet, Animated, View, Dimensions } from "react-native";
+import Colors from "../../../../constants/Colors";
 import React from "react";
 
 const { width } = Dimensions.get("screen");
@@ -19,7 +20,11 @@ const Pagination = ({ data, scrollX }) => {
                 });
                 const backgroundColor = scrollX.interpolate({
                     inputRange,
-                    outputRange: ["#D9EBFF", "#2880F1", "#D9EBFF"], // Example colors
+                    outputRange: [
+                        Colors.baseLightBlue,
+                        Colors.baseBlue,
+                        Colors.baseLightBlue,
+                    ], // Example colors
                     extrapolate: "clamp",
                 });
                 return (
@@ -52,6 +57,6 @@ const styles = StyleSheet.create({
         height: 10,
         borderRadius: 5,
         marginHorizontal: 4,
-        backgroundColor: "#D9EBFF",
+        backgroundColor: Colors.baseLightBlue,
     },
 });

@@ -1,23 +1,47 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Colors from "../../constants/Colors";
 import React from "react";
 
-const MarqButton = ({ title, onPress, isLight = false }) => {
+const MarqButton = ({
+    title,
+    onPress,
+    isLight = false,
+    isDark = false,
+    icon,
+    disabled,
+}) => {
+    const buttonBackgroundColor = disabled
+        ? Colors.lightGray
+        : isLight
+        ? Colors.baseLightBlue
+        : isDark
+        ? Colors.baseBlack
+        : Colors.baseBlue;
+
+    const buttonTextColor = disabled ? "#fff" : isLight ? "#007AFF" : "#fff";
+
     return (
         <TouchableOpacity
             onPress={onPress}
+            disabled={disabled}
             style={[
                 styles.marqButton,
-                { backgroundColor: isLight ? "#D9EBFF" : "#2880F1" },
+                {
+                    backgroundColor: buttonBackgroundColor,
+                },
             ]}
         >
-            <Text
-                style={[
-                    styles.marqButtonContent,
-                    { color: isLight ? "#007AFF" : "#fff" },
-                ]}
-            >
-                {title}
-            </Text>
+            <View style={styles.buttonContent}>
+                {icon && icon}
+                <Text
+                    style={[
+                        styles.marqButtonContent,
+                        { color: buttonTextColor },
+                    ]}
+                >
+                    {title}
+                </Text>
+            </View>
         </TouchableOpacity>
     );
 };
@@ -35,5 +59,10 @@ const styles = StyleSheet.create({
     marqButtonContent: {
         textAlign: "center",
         fontSize: 18,
+    },
+    buttonContent: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import React from "react";
+import Colors from "../../../../constants/Colors";
 
 const { width, height } = Dimensions.get("screen");
 const SlideItem = ({ item }) => {
@@ -42,6 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         marginVertical: 8,
-        color: "#737373",
+        color: Colors.textFontColor,
     },
 });
