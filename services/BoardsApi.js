@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import * as SecureStore from "expo-secure-store";
+const accessToken = SecureStore.getItemAsync("accessToken");
 
-const accessToken = localStorage.getItem("accessToken");
 const Headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Autheraization: `Barear ${accessToken}`,
+    Authorization: `Bearer ${accessToken}`,
 };
 
 const baseUrl = "https://app.marqly.com/api";
@@ -45,4 +46,9 @@ export const boardsApi = createApi({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = boardsApi;
+export const {
+    useGetBoardsQuery,
+    useCreateBoardMutation,
+    useUpdateBoardMutation,
+    useDeleteBoardMutation,
+} = boardsApi;

@@ -4,7 +4,7 @@ import ScreenWrapper from "../components/UI/ScreenWrapper";
 const BookmarksScreen = () => {
     return (
         <ScreenWrapper>
-            <Text>BookmarksScreen</Text>
+            <Text>Bookmarks Screen</Text>
         </ScreenWrapper>
     );
 };

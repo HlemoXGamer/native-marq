@@ -39,14 +39,14 @@ export default function App() {
                         />
                         <Stack.Screen
                             name="Boards"
-                            component={BookmarksScreen}
+                            component={BoardsScreen}
                             options={{
                                 header: () => <TheHeader />,
                             }}
                         />
                         <Stack.Screen
                             name="Bookmarks"
-                            component={BoardsScreen}
+                            component={BookmarksScreen}
                             options={{
                                 header: () => <TheHeader />,
                             }}

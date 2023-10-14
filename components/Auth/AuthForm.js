@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+import * as SecureStore from "expo-secure-store";
 
 // Components
 import MarqInput from "../Common/MarqInput";
@@ -63,12 +64,12 @@ const AuthForm = ({ mode }) => {
     const [register] = useRegisterMutation();
 
     const authHandler = async () => {
-        console.log("Hello World");
         try {
             const authAction = isSignUpMode
                 ? register(registerCredentials)
                 : login(loginCredentials);
             const response = await authAction.unwrap();
+            navigation.navigate("Boards");
             const successMessage = isSignUpMode
                 ? "Account Registered Successfully"
                 : "Login successful";
@@ -76,8 +77,9 @@ const AuthForm = ({ mode }) => {
                 type: "success",
             });
             console.log(response);
-            localStorage.setItem("accessToken", response.token);
-            navigation.navigate("Boards");
+            await SecureStore.setItemAsync("accessToken", response.token);
+            console.log(response.token);
+            console.log(SecureStore.getItemAsync("accessToken"));
         } catch (error) {
             console.log(
                 isSignUpMode ? "Registration failed" : "Login failed",

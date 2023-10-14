@@ -1,10 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const accessToken = localStorage.getItem("accessToken");
+import * as SecureStore from "expo-secure-store";
+
+const accessToken = SecureStore.getItemAsync("accessToken");
+
 const Headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Autheraization: `Barear ${accessToken}`,
+    Authorization: `Bearer ${accessToken}`,
 };
 
 const baseUrl = "https://app.marqly.com/api";
@@ -80,4 +83,13 @@ export const bookmarksApi = createApi({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = bookmarksApi;
+export const {
+    useCreateBookmarkMutation,
+    useGetBoardBookmarksQuery,
+    useUpdateBookmarkMutation,
+    useDeleteBookmarkMutation,
+    useBulkDeleteBookmarksMutation,
+    useBulkMoveBookmarksMutation,
+    useBulkAssignTagsBookmarksMutation,
+    useBulkCopyBookmarksMutation,
+} = bookmarksApi;
