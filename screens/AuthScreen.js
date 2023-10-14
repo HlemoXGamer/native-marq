@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
+
+// Components
 import ScreenWrapper from "../components/UI/ScreenWrapper";
 import MarqIcon from "../components/UI/MarqIcon";
 import AuthButtons from "../components/Auth/AuthButtons";
@@ -7,8 +9,10 @@ import AuthDivider from "../components/Auth/AuthDivider";
 import AuthForm from "../components/Auth/AuthForm";
 
 const AuthScreen = () => {
+    // Get Route Parameter
     const route = useRoute();
     const { mode } = route.params;
+
     return (
         <ScreenWrapper>
             <View style={styles.icon}>
@@ -16,7 +20,7 @@ const AuthScreen = () => {
             </View>
             <AuthButtons />
             <AuthDivider content={"or continue with email"} />
-            <AuthForm />
+            <AuthForm mode={mode} />
         </ScreenWrapper>
     );
 };

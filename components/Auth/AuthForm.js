@@ -1,22 +1,42 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+
+// Components
 import MarqInput from "../Common/MarqInput";
 import Colors from "../../constants/Colors";
 import MarqButton from "../Common/MarqButton";
 
-const AuthForm = () => {
+// Redux
+import { useLoginMutation, useRegisterMutation } from "../../services/AuthApi";
+
+// Toastification
+import { useToast } from "react-native-toast-notifications";
+import { useNavigation } from "@react-navigation/native";
+
+const AuthForm = ({ mode }) => {
+    const toast = useToast();
+    const navigation = useNavigation();
+
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [passowrd, setPassword] = useState("");
+    const [password, setPassword] = useState("");
+
+    const isSignUpMode = mode === "Sign Up";
 
     const Validation = () => {
         if (
-            email.length === 0 ||
-            passowrd.length === 0 ||
-            passowrd.length < 8
+            (isSignUpMode &&
+                (!username || !email || !password || password.length < 6)) ||
+            (!isSignUpMode && (!email || !password || password.length < 6))
         ) {
             return true;
         }
         return false;
+    };
+
+    const UsernameHandler = (val) => {
+        setUsername(val);
+        Validation();
     };
 
     const EmailHandler = (val) => {
@@ -29,9 +49,57 @@ const AuthForm = () => {
         Validation();
     };
 
+    // Auth Flow
+    const loginCredentials = {
+        email: email,
+        password: password,
+    };
+    const registerCredentials = {
+        email: email,
+        password: password,
+    };
+
+    const [login] = useLoginMutation();
+    const [register] = useRegisterMutation();
+
+    const authHandler = async () => {
+        console.log("Hello World");
+        try {
+            const authAction = isSignUpMode
+                ? register(registerCredentials)
+                : login(loginCredentials);
+            const response = await authAction.unwrap();
+            const successMessage = isSignUpMode
+                ? "Account Registered Successfully"
+                : "Login successful";
+            toast.show(successMessage, {
+                type: "success",
+            });
+            console.log(response);
+            localStorage.setItem("accessToken", response.token);
+            navigation.navigate("Boards");
+        } catch (error) {
+            console.log(
+                isSignUpMode ? "Registration failed" : "Login failed",
+                error
+            );
+            toast.show(error.data.message, {
+                type: "danger",
+            });
+        }
+    };
+
     return (
         <View>
             <View style={{ rowGap: 24 }}>
+                {isSignUpMode && (
+                    <MarqInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={UsernameHandler}
+                        secureTextEntry={false}
+                    />
+                )}
                 <MarqInput
                     placeholder="Email"
                     value={email}
@@ -40,7 +108,7 @@ const AuthForm = () => {
                 />
                 <MarqInput
                     placeholder="Password"
-                    value={passowrd}
+                    value={password}
                     onChangeText={PasswordHandler}
                     secureTextEntry={true}
                 />
@@ -66,7 +134,11 @@ const AuthForm = () => {
                 and{" "}
                 <Text style={{ color: Colors.baseBlue }}>Privacy Policy.</Text>
             </Text>
-            <MarqButton title="Continue" disabled={Validation()} />
+            <MarqButton
+                title="Continue"
+                onPress={authHandler}
+                disabled={Validation()}
+            />
         </View>
     );
 };

@@ -7,11 +7,9 @@ const LoginButtons = () => {
 
     const SignInHandler = () => {
         navigation.navigate("Auth", { mode: "Sign In" });
-        console.log("Testing");
     };
     const SignUpHandler = () => {
         navigation.navigate("Auth", { mode: "Sign Up" });
-        console.log("Testing");
     };
     return (
         <View style={{ rowGap: 8 }}>
