@@ -15,13 +15,14 @@ import store from "./store";
 
 // Toastification
 import { ToastProvider } from "react-native-toast-notifications";
+import TheHeader from "./components/UI/TheHeader";
 
 export default function App() {
     return (
         <Provider store={store}>
             <ToastProvider placement="top" animationType="zoom-in">
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Home">
+                    <Stack.Navigator initialRouteName="Boards">
                         <Stack.Screen
                             name="Home"
                             component={HomeScreen}
@@ -39,10 +40,16 @@ export default function App() {
                         <Stack.Screen
                             name="Boards"
                             component={BookmarksScreen}
+                            options={{
+                                header: () => <TheHeader />,
+                            }}
                         />
                         <Stack.Screen
                             name="Bookmarks"
                             component={BoardsScreen}
+                            options={{
+                                header: () => <TheHeader />,
+                            }}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>
