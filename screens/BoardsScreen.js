@@ -1,9 +1,16 @@
 import { StyleSheet, Button, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+// Components
 import BoardsList from "../components/Boards/BoardsList";
+
+// Redux
+import { useGetBoardsQuery } from "../services/BoardsApi";
 
 const BoardsScreen = () => {
     const navigation = useNavigation();
+
+    const { data, isFetching } = useGetBoardsQuery();
     return (
         <View
             style={{

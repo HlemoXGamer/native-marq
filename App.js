@@ -22,7 +22,7 @@ export default function App() {
         <Provider store={store}>
             <ToastProvider placement="top" animationType="zoom-in">
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Boards">
+                    <Stack.Navigator initialRouteName="Home">
                         <Stack.Screen
                             name="Home"
                             component={HomeScreen}

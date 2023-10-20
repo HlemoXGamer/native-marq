@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import * as SecureStore from "expo-secure-store";
-const accessToken = SecureStore.getItemAsync("accessToken");
+const accessToken = await AsyncStorage.getItem("accessToken");
+
 const Headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

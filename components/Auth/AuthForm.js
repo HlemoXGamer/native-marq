@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Components
 import MarqInput from "../Common/MarqInput";
@@ -56,6 +56,7 @@ const AuthForm = ({ mode }) => {
         password: password,
     };
     const registerCredentials = {
+        username: username,
         email: email,
         password: password,
     };
@@ -77,7 +78,7 @@ const AuthForm = ({ mode }) => {
                 type: "success",
             });
             console.log(response);
-            await SecureStore.setItemAsync("accessToken", response.token);
+            AsyncStorage.setItem("accessToken", response.token);
             console.log(response.token);
             console.log(SecureStore.getItemAsync("accessToken"));
         } catch (error) {
